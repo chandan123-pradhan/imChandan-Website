@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_website/screens/sign_in_screen.dart';
 import 'package:my_website/utils/globalMethods.dart';
 import 'package:my_website/utils/image_utils.dart';
+import 'package:my_website/utils/routings.dart';
 import 'package:my_website/widgets/botton_widget.dart';
 
 class DashbaordAppBar extends StatefulWidget {
@@ -12,6 +14,7 @@ class DashbaordAppBar extends StatefulWidget {
 
 class _DashbaordAppBarState extends State<DashbaordAppBar> {
   @override
+  bool isLoggedIn = false;
   Widget build(BuildContext context) {
     return Container(
       height: displayHeight(context) / 10,
@@ -29,42 +32,73 @@ class _DashbaordAppBarState extends State<DashbaordAppBar> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-               
-                BottonWidgets.getMainBotton(
-                    context: context, title: 'New Sigma 4.0', onPressed: () {}),
+                BottonWidgets.getSmallMainBotton(
+                    context: context, title: 'Home', onPressed: () {}),
                 SizedBox(
                   width: displayWidth(context) / 30,
                 ),
-                BottonWidgets.textBotton(
-                    context: context, title: 'Home', onPressed: () {}),
-                    SizedBox(
-                  width: displayWidth(context) / 35,
-                ),
                 BottonWidgets.textBottonWithIcon(
-                    context: context, title: 'New Cources', onPressed: () {},
-                    icon: Icons.keyboard_arrow_down,
-
-
-                    ),
-                      SizedBox(
+                  context: context,
+                  title: 'New Cources',
+                  onPressed: () {},
+                  icon: Icons.keyboard_arrow_down,
+                ),
+                SizedBox(
                   width: displayWidth(context) / 35,
                 ),
                 BottonWidgets.textBotton(
-                    context: context, title: 'My Batch', onPressed: () {},
-                  
-                    ),
-                        SizedBox(
+                  context: context,
+                  title: 'My Batch',
+                  onPressed: () {},
+                ),
+                SizedBox(
                   width: displayWidth(context) / 35,
                 ),
-                BottonWidgets.textBotton(
-                    context: context, title: 'Sign out', onPressed: () {},
-                  
-                    ),
+                isLoggedIn
+                    ? BottonWidgets.textBotton(
+                        context: context,
+                        title: 'Profile',
+                        onPressed: () {
+                          Navigator.pushNamed(context, Routings.profileRoute);
+                        },
+                      )
+                    : BottonWidgets.textBotton(
+                        context: context,
+                        title: 'Sign In',
+                        onPressed: () {
+                          showSignupDialog(context);
+                        },
+                      ),
               ],
             )
           ],
         ),
       ),
     );
+  }
+
+  void showSignupDialog(BuildContext context) {
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration:
+          const Duration(milliseconds: 300), // Animation duration
+      pageBuilder: (BuildContext buildContext, Animation animation,
+          Animation secondaryAnimation) {
+        return const SignupDialog(); // The dialog content
+      },
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation, // Fade animation
+          child: child,
+        );
+      },
+    ).then((val) {
+      setState(() {
+        isLoggedIn = true;
+      });
+    });
   }
 }

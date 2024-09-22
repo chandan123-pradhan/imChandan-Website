@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_website/screens/dashboard.dart';
+import 'package:my_website/screens/profile_page.dart';
+import 'package:my_website/utils/routings.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +20,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Dashboard()
+      initialRoute: '/',
+  routes: {
+    Routings.homeRoute: (context) => Dashboard(),
+    Routings.profileRoute: (context) => ProfilePage(),
+  },
+    
     );
   }
 }
