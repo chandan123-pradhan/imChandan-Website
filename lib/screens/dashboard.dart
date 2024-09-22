@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_website/utils/color_constant.dart';
 import 'package:my_website/utils/globalMethods.dart';
+import 'package:my_website/utils/routings.dart';
 import 'package:my_website/widgets/about_our_community_widget.dart';
 import 'package:my_website/widgets/botton_widget.dart';
 import 'package:my_website/widgets/cources_widget.dart';
@@ -166,8 +167,17 @@ class _DashboardState extends State<Dashboard> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
-                                  CourcesWidget(
-                                    title: 'Complete Flutter Development',
+                                  InkWell(
+                                  onTap: (){
+                                    Navigator.pushNamed(
+  context,
+  Routings.courseDetailsRoute,
+  arguments: 'Complete Flutter Development',
+);
+                                  },
+                                    child: CourcesWidget(
+                                      title: 'Complete Flutter Development',
+                                    ),
                                   ),
                                   CourcesWidget(
                                       title: 'Flutter Crash Course',

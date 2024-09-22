@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_website/screens/cource_details_screen.dart';
 import 'package:my_website/screens/dashboard.dart';
 import 'package:my_website/screens/profile_page.dart';
 import 'package:my_website/utils/routings.dart';
@@ -24,6 +25,11 @@ class MyApp extends StatelessWidget {
   routes: {
     Routings.homeRoute: (context) => Dashboard(),
     Routings.profileRoute: (context) => ProfilePage(),
+    Routings.courseDetailsRoute:(context){
+       final args = ModalRoute.of(context)!.settings.arguments as String;
+    return CourseDetailsScreen(title: args);
+  },
+      
   },
     
     );
