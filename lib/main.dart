@@ -26,8 +26,8 @@ class MyApp extends StatelessWidget {
     Routings.homeRoute: (context) => Dashboard(),
     Routings.profileRoute: (context) => ProfilePage(),
     Routings.courseDetailsRoute:(context){
-       final args = ModalRoute.of(context)!.settings.arguments as String;
-    return CourseDetailsScreen(title: args);
+      
+    return CourseDetailsScreen();
   },
       
   },

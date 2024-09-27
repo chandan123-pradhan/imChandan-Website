@@ -172,7 +172,7 @@ class _DashboardState extends State<Dashboard> {
                                     Navigator.pushNamed(
   context,
   Routings.courseDetailsRoute,
-  arguments: 'Complete Flutter Development',
+ 
 );
                                   },
                                     child: CourcesWidget(
