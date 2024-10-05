@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:my_website/models/course_model.dart';
 import 'package:my_website/utils/color_constant.dart';
 import 'package:my_website/utils/globalMethods.dart';
+import 'package:my_website/utils/routings.dart';
 import 'package:my_website/widgets/botton_widget.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -341,7 +342,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                 child: BottonWidgets.getSmallMainBotton(
                                     context: context,
                                     title: 'Start New Blog',
-                                    onPressed: () {}),
+                                    onPressed: () {
+                                       Navigator.pushNamed(
+  context,
+  Routings.writeBlogRoute,
+ 
+);
+                                    }),
                               ),
                             ],
                           ),

@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:my_website/controllers/write_blogs_controller.dart';
 import 'package:my_website/screens/cource_details_screen.dart';
 import 'package:my_website/screens/dashboard.dart';
 import 'package:my_website/screens/profile_page.dart';
+import 'package:my_website/screens/write_blog_screen.dart';
 import 'package:my_website/utils/routings.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  final writeBlogController = WriteBlogsController();
+  runApp(
+    MultiProvider(
+      providers: [
+         ChangeNotifierProvider(create: (_)=>writeBlogController)
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -22,16 +33,12 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       initialRoute: '/',
-  routes: {
-    Routings.homeRoute: (context) => Dashboard(),
-    Routings.profileRoute: (context) => ProfilePage(),
-    Routings.courseDetailsRoute:(context){
-      
-    return CourseDetailsScreen();
-  },
-      
-  },
-    
+      routes: {
+        Routings.homeRoute: (context) => Dashboard(),
+        Routings.profileRoute: (context) => ProfilePage(),
+        Routings.courseDetailsRoute: (context) => CourseDetailsScreen(),
+        Routings.writeBlogRoute: (context) => WriteBlogScreen()
+      },
     );
   }
 }

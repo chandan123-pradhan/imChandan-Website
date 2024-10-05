@@ -9,22 +9,58 @@ class BottonWidgets {
     required String title,
     required Function onPressed,
   }) {
-    return Container(
-      height: displayHeight(context) / 20,
-      width: displayWidth(context) / 10,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: ColorConstant.lightRedColor),
-      alignment: Alignment.center,
-      child: Text(
-        title,
-        style: GoogleFonts.barlow(
-          textStyle: TextStyle(
-              color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
+    return InkWell(
+      onTap: (){
+        onPressed();
+      },
+      child: Container(
+        height: displayHeight(context) / 20,
+        width: displayWidth(context) / 10,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: ColorConstant.lightRedColor),
+        alignment: Alignment.center,
+        child: Text(
+          title,
+          style: GoogleFonts.barlow(
+            textStyle: TextStyle(
+                color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
+          ),
         ),
       ),
     );
   }
+
+
+ static Widget tinnySmallMainBotton({
+    required BuildContext context,
+    required String title,
+    required Function onPressed,
+    Color?color
+  }) {
+    return InkWell(
+      onTap: (){
+        onPressed();
+      },
+      child: Container(
+        height: displayHeight(context) / 25,
+        width: displayWidth(context) / 12,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: color??ColorConstant.lightRedColor),
+        alignment: Alignment.center,
+        child: Text(
+          title,
+          style: GoogleFonts.barlow(
+            textStyle: TextStyle(
+                color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600),
+          ),
+        ),
+      ),
+    );
+  }
+
+  
 
   static Widget textBotton(
       {required String title,
