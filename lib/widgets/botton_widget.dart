@@ -138,22 +138,23 @@ class BottonWidgets {
    static Widget getContinueBotton({
     required BuildContext context,
     required String title,
-    required Function onPressed,
+    
   }) {
-    return Container(
-      height: displayHeight(context) / 15,
-      // width: displayWidth(context) / 6,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: ColorConstant.lightRedColor),
-      alignment: Alignment.center,
-      child: Text(
-        title,
-        style: GoogleFonts.barlow(
-          textStyle: TextStyle(
-              color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
+    return  Container(
+        height: displayHeight(context) / 15,
+        // width: displayWidth(context) / 6,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: ColorConstant.lightRedColor),
+        alignment: Alignment.center,
+        child: Text(
+          title,
+          style: GoogleFonts.barlow(
+            textStyle: TextStyle(
+                color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
+          ),
         ),
-      ),
+      
     );
   }
 }

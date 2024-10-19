@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_website/controllers/auth_controller.dart';
 import 'package:my_website/controllers/write_blogs_controller.dart';
 import 'package:my_website/screens/cource_details_screen.dart';
 import 'package:my_website/screens/dashboard.dart';
@@ -9,10 +10,13 @@ import 'package:provider/provider.dart';
 
 void main() {
   final writeBlogController = WriteBlogsController();
+  final authController=AuthController();
   runApp(
     MultiProvider(
       providers: [
-         ChangeNotifierProvider(create: (_)=>writeBlogController)
+         ChangeNotifierProvider(create: (_)=>writeBlogController),
+         ChangeNotifierProvider(create: (_)=>authController)
+
       ],
       child: MyApp(),
     ),
