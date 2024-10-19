@@ -1,6 +1,10 @@
+import 'dart:js_interop';
+
 import 'package:flutter/material.dart';
 import 'package:my_website/models/widget_model.dart';
 import 'package:my_website/models/widgets_item.dart';
+import 'package:my_website/widgets/add_image_widget.dart';
+import 'package:my_website/widgets/divider_widget.dart';
 import 'package:my_website/widgets/title_text_field_widget.dart';
 
 class WriteBlogsController extends ChangeNotifier {
@@ -23,6 +27,23 @@ class WriteBlogsController extends ChangeNotifier {
             new TextEditingController();
        widgetItems.add(
           WidgetModel(textEditingController: textEditingController, widget: headingTextField(), widgetType: WidgetsItem.headingWidget)
+        );
+        break;
+      case WidgetsItem.descriptionWidget:
+        TextEditingController textEditingController =
+            new TextEditingController();
+         widgetItems.add(
+          WidgetModel(textEditingController: textEditingController, widget: descriptionTextField(), widgetType: WidgetsItem.dividerWidget)
+        );
+        break;
+      case WidgetsItem.dividerWidget:
+        widgetItems.add(
+          WidgetModel(textEditingController: null, widget: addDividerWidget(), widgetType: WidgetsItem.dividerWidget)
+        );
+        break;
+      case WidgetsItem.imageWidget:
+        widgetItems.add(WidgetModel(textEditingController: null, widget: DynamicImageWidget(),
+        widgetType: WidgetsItem.imageWidget)
         );
         break;
     }

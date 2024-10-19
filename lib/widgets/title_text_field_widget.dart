@@ -45,3 +45,25 @@ Widget headingTextField() {
       ));
 }
 
+Widget descriptionTextField() {
+  return TextFormField(
+    maxLines: null,
+      decoration:  InputDecoration(
+        hintText: 'write here...', // Hint text
+        hintStyle: GoogleFonts.barlow(
+        textStyle: TextStyle(
+            color: Colors.black38,
+            fontSize: 18  ,
+            fontWeight: FontWeight.w500),
+      ),
+        border:
+            InputBorder.none
+      ),
+      style: GoogleFonts.barlow(
+        textStyle: TextStyle(
+            color: Colors.black,
+            fontSize: 18,
+            fontWeight: FontWeight.w600),
+      ));
+}
+
