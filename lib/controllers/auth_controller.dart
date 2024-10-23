@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:my_website/models/api_response/user_registration_api_respnose.dart';
 import 'package:my_website/models/register_model.dart';
 import 'package:my_website/utils/message_utils.dart';
+import 'package:my_website/utils/shared_pref.dart';
 import 'package:my_website/web_services/url_constant.dart';
 import 'package:my_website/web_services/web_services.dart';
 
 class AuthController extends ChangeNotifier {
   bool isRequesting = false;
   bool isSignin = false;
-  void callForRegister({required RegisterModel registerModel, required BuildContext context}) async {
+  SharedPref _sharedPref = new SharedPref();
+  void callForRegister(
+      {required RegisterModel registerModel,
+      required BuildContext context}) async {
     isRequesting = true;
     notifyListeners();
 
@@ -24,10 +29,14 @@ class AuthController extends ChangeNotifier {
     print(response.message);
     isRequesting = false;
     notifyListeners();
-    if(response.status==false){
-      ToastMessage.showErrorDialog(context,response.message);
-    }else{
-      ToastMessage.showErrorDialog(context,response.message);
+    if (response.status == true) {
+      response.data = UserRegistrationApiResponse.fromJson(response.data);
+      Navigator.pop(context);
+      bool result =
+          await _sharedPref.saveAuthToken(authToken: response.data.token);
+      ToastMessage.showSuccessDialog(context, response.message);
+    } else {
+      ToastMessage.showErrorDialog(context, response.message);
     }
   }
 

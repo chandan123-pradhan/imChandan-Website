@@ -1,11 +1,15 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_website/controllers/profile_controller.dart';
 import 'package:my_website/models/course_model.dart';
+import 'package:my_website/utils/app_state.dart';
 import 'package:my_website/utils/color_constant.dart';
 import 'package:my_website/utils/globalMethods.dart';
 import 'package:my_website/utils/routings.dart';
+import 'package:my_website/web_services/url_constant.dart';
 import 'package:my_website/widgets/botton_widget.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -79,6 +83,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<ProfileController>(context,listen: false).getProfile();
     return Scaffold(
       body: SingleChildScrollView(
         physics: NeverScrollableScrollPhysics(),
@@ -94,216 +99,225 @@ class _ProfilePageState extends State<ProfilePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    width: displayWidth(context) / 4,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: displayHeight(context) / 3,
-                          width: displayHeight(context) / 3,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                  width: 1, color: ColorConstant.lightRedColor),
-                              image: const DecorationImage(
-                                  image: AssetImage(
-                                    'assets/profile_pic.png',
-                                  ),
-                                  fit: BoxFit.fill)),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          "Chandan Pradhan",
-                          style: GoogleFonts.barlow(
-                            textStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 22,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                        Text(
-                          "chandanpradhanbxr@gmail.com",
-                          style: GoogleFonts.barlow(
-                            textStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          width: displayWidth(context) / 5,
-                          child: RichText(
-                            text: TextSpan(
+                  Consumer<ProfileController>(
+              builder: (context, profileController, child) {
+                      return Container(
+                        width: displayWidth(context) / 4,
+                        child: 
+                        profileController.currentState==AppState.loading?Center(
+                          child: CircularProgressIndicator(),
+                        ):
+                        
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: displayHeight(context) / 3,
+                              width: displayHeight(context) / 3,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                      width: 1, color: ColorConstant.lightRedColor),
+                                  image:  DecorationImage(
+                                      image: NetworkImage(
+                                      UrlConstant.base_url+ '/'+profileController.getProfileApiResponse!.data.profilePic
+                                      ),
+                                      fit: BoxFit.fill)),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              "Chandan Pradhan",
                               style: GoogleFonts.barlow(
-                                textStyle: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
+                                textStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ),
+                            Text(
+                              "chandanpradhanbxr@gmail.com",
+                              style: GoogleFonts.barlow(
+                                textStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                              width: displayWidth(context) / 5,
+                              child: RichText(
+                                text: TextSpan(
+                                  style: GoogleFonts.barlow(
+                                    textStyle: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  children: [
+                                    const TextSpan(
+                                        text:
+                                            "Full Stack Mobile App Developer/Youtuber: "),
+                                    TextSpan(
+                                      text: "https://www.youtube.com/@Career_Tips",
+                                      style: TextStyle(
+                                          color: ColorConstant.lightRedColor,
+                                          decoration: TextDecoration.underline),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () async {},
+                                    ),
+                                  ],
                                 ),
                               ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                                width: displayWidth(context) / 5,
+                                child: BottonWidgets.getSmallMainBotton(
+                                    context: context,
+                                    title: 'Edit Profile',
+                                    onPressed: () {})),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                const TextSpan(
-                                    text:
-                                        "Full Stack Mobile App Developer/Youtuber: "),
-                                TextSpan(
-                                  text: "https://www.youtube.com/@Career_Tips",
-                                  style: TextStyle(
-                                      color: ColorConstant.lightRedColor,
-                                      decoration: TextDecoration.underline),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () async {},
+                                Image.asset(
+                                  'assets/teamwork.png',
+                                  height: 22,
+                                  width: 22,
+                                  color: Colors.black,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  "100 Followers",
+                                  style: GoogleFonts.barlow(
+                                    textStyle: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "|",
+                                  style: GoogleFonts.barlow(
+                                    textStyle: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "2 Following",
+                                  style: GoogleFonts.barlow(
+                                    textStyle: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600),
+                                  ),
                                 ),
                               ],
                             ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                            width: displayWidth(context) / 5,
-                            child: BottonWidgets.getSmallMainBotton(
-                                context: context,
-                                title: 'Edit Profile',
-                                onPressed: () {})),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/teamwork.png',
-                              height: 22,
-                              width: 22,
-                              color: Colors.black,
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              children: [
+                                Image.asset(
+                                  'assets/office.png',
+                                  height: 20,
+                                  width: 20,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "Microsoft",
+                                  style: GoogleFonts.barlow(
+                                    textStyle: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                              ],
                             ),
                             SizedBox(
-                              width: 5,
+                              height: 15,
                             ),
-                            Text(
-                              "100 Followers",
-                              style: GoogleFonts.barlow(
-                                textStyle: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w600),
-                              ),
+                            Row(
+                              children: [
+                                Image.asset(
+                                  'assets/pin.png',
+                                  height: 20,
+                                  width: 20,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "Banglore",
+                                  style: GoogleFonts.barlow(
+                                    textStyle: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(
-                              width: 10,
+                            SizedBox(
+                              height: 15,
                             ),
-                            Text(
-                              "|",
-                              style: GoogleFonts.barlow(
-                                textStyle: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600),
-                              ),
+                            Row(
+                              children: [
+                                Image.asset(
+                                  'assets/link.png',
+                                  height: 20,
+                                  width: 20,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "https://github.com/chandan123-pradhan",
+                                  style: GoogleFonts.barlow(
+                                    textStyle: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              "2 Following",
-                              style: GoogleFonts.barlow(
-                                textStyle: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          children: [
-                            Image.asset(
-                              'assets/office.png',
+                            SizedBox(
                               height: 20,
-                              width: 20,
                             ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              "Microsoft",
-                              style: GoogleFonts.barlow(
-                                textStyle: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ),
+                            Container(
+                              width: displayWidth(context) / 5,
+                              height: 0.3,
+                              color: Colors.black26,
+                            )
                           ],
                         ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          children: [
-                            Image.asset(
-                              'assets/pin.png',
-                              height: 20,
-                              width: 20,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              "Banglore",
-                              style: GoogleFonts.barlow(
-                                textStyle: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          children: [
-                            Image.asset(
-                              'assets/link.png',
-                              height: 20,
-                              width: 20,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              "https://github.com/chandan123-pradhan",
-                              style: GoogleFonts.barlow(
-                                textStyle: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          width: displayWidth(context) / 5,
-                          height: 0.3,
-                          color: Colors.black26,
-                        )
-                      ],
-                    ),
+                      );
+                    }
                   ),
                   const SizedBox(
                     width: 10,

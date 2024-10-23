@@ -1,17 +1,19 @@
-class BaseResponseModel {
-  BaseResponseModel({
+import 'package:my_website/models/api_response/user_model.dart';
+
+class GetProfileApiResponse {
+  GetProfileApiResponse({
     required this.status,
     required this.message,
     required this.data,
   });
   late final bool status;
   late final String message;
-  late dynamic data;
+  late final UserData data;
   
-  BaseResponseModel.fromJson(Map<String, dynamic> json){
+  GetProfileApiResponse.fromJson(Map<String, dynamic> json){
     status = json['status'];
     message = json['message'];
-    data = json['data'];
+    data = UserData.fromJson(json['data']);
   }
 
   Map<String, dynamic> toJson() {
@@ -22,4 +24,3 @@ class BaseResponseModel {
     return _data;
   }
 }
-

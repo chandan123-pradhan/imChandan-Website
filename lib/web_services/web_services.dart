@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:my_website/models/base_response_model.dart';
+import 'package:my_website/utils/shared_pref.dart';
 import 'package:my_website/web_services/url_constant.dart';
 
 class WebServices {
@@ -38,12 +39,37 @@ class WebServices {
 
       // Parse the response
       var responseData = await http.Response.fromStream(response);
-      return BaseResponseModel.fromJson(json.decode(responseData.body));
+      return BaseResponseModel(
+          data: json.decode(responseData.body),
+          message: 'User Registration successfully done.',
+          status: true);
     } catch (e) {
       return BaseResponseModel(
           status: false,
           message: 'Something Went Wrong, please try again.',
           data: {});
+    }
+  }
+
+  static Future<BaseResponseModel> getRequestAfterAuth(
+      {required String routeUrL}) async {
+    String? authToken = await SharedPref.getAuthToken();
+    try {
+      Map<String, String> header = {'Authorization': 'Bearer $authToken'};
+      Uri uri = Uri.parse(
+        UrlConstant.base_url + routeUrL,
+      );
+      var response = await http.get(uri, headers: header);
+      if (response.statusCode != 200) {
+        return BaseResponseModel(
+            status: false,
+            message: 'success',
+            data: json.decode(response.body));
+      }
+      return BaseResponseModel(
+          status: true, message: 'success', data: json.decode(response.body));
+    } catch (e) {
+      return BaseResponseModel(status: false, message: 'success', data: {});
     }
   }
 }

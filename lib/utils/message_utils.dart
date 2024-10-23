@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_website/utils/color_constant.dart';
+import 'package:my_website/utils/globalMethods.dart';
 import 'package:my_website/widgets/botton_widget.dart';
 
 class ToastMessage {
@@ -14,11 +15,11 @@ class ToastMessage {
           ),
           backgroundColor: Colors.white, // Background color
           elevation: 5, // Shadow effect
-          titlePadding: EdgeInsets.only(left: 20,top: 10),
-          contentPadding: EdgeInsets.only(left: 20,top: 10),
-          buttonPadding: EdgeInsets.only(top: 5,right: 20),
+          titlePadding: EdgeInsets.only(left: 20, top: 10),
+          contentPadding: EdgeInsets.only(left: 20, top: 10),
+          buttonPadding: EdgeInsets.only(top: 5, right: 20),
           insetPadding: EdgeInsets.zero,
-          actionsPadding: EdgeInsets.only(bottom: 10,right: 20,top: 5),
+          actionsPadding: EdgeInsets.only(bottom: 10, right: 20, top: 5),
           title: Row(
             children: [
               Icon(
@@ -73,7 +74,6 @@ class ToastMessage {
     );
   }
 
-
   static void showSuccessDialog(BuildContext context, String successMessage) {
     showDialog(
       context: context,
@@ -84,37 +84,48 @@ class ToastMessage {
           ),
           backgroundColor: Colors.white, // Background color
           elevation: 5, // Shadow effect
-          titlePadding: EdgeInsets.only(left: 0,top: 10),
-          contentPadding: EdgeInsets.only(left: 20,top: 10),
-          buttonPadding: EdgeInsets.only(top: 5,right: 20),
+          titlePadding: EdgeInsets.only(left: 0, top: 10),
+          contentPadding: EdgeInsets.only(left: 20, top: 10, right: 20),
+          buttonPadding: EdgeInsets.only(top: 5, right: 20),
           insetPadding: EdgeInsets.zero,
-          actionsPadding: EdgeInsets.only(bottom: 10,right: 20,top: 5),
-         
-          content: Column(
-            children: [
-              Text(
-                successMessage,
-                style: GoogleFonts.barlow(
-                  textStyle: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
+          actionsPadding: EdgeInsets.only(bottom: 10, right: 20, top: 5),
+
+          content: Container(
+            height: displayHeight(context) / 2,
+            width: displayWidth(context) / 3,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  successMessage,
+                  style: GoogleFonts.barlow(
+                    textStyle: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
-              ),
-            ],
+                Image.asset(
+                  'assets/success.png',
+                  height: 150,
+                  width: 150,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: BottonWidgets.getContinueBotton(
+                      context: context,
+                      title: "Let's Go",
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-          actions: <Widget>[
-            InkWell(
-                  onTap: () {
-                  
-                  },
-                  child: BottonWidgets.getContinueBotton(
-                    context: context,
-                    title: "Let's Go",
-                  ),
-                ),
-          ],
         );
       },
     );
