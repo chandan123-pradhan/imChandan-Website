@@ -128,7 +128,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               height: 20,
                             ),
                             Text(
-                              "Chandan Pradhan",
+                              profileController.getProfileApiResponse!.data.fullName,
                               style: GoogleFonts.barlow(
                                 textStyle: TextStyle(
                                     color: Colors.black,
@@ -137,7 +137,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                             Text(
-                              "chandanpradhanbxr@gmail.com",
+                              profileController.getProfileApiResponse!.data.email,
                               style: GoogleFonts.barlow(
                                 textStyle: TextStyle(
                                     color: Colors.black,

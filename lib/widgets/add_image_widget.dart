@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:my_website/controllers/write_blogs_controller.dart';
 import 'dart:typed_data';
+
+import 'package:provider/provider.dart';
 
 class DynamicImageWidget extends StatefulWidget {
   final double maxWidth; // maximum width to fit the image within
@@ -24,31 +27,37 @@ class _DynamicImageWidgetState extends State<DynamicImageWidget> {
       setState(() {
         _imageBytes = bytes;
       });
+      final WriteBlogsController writeBlogsController=new WriteBlogsController();
+      writeBlogsController.addImage(pickedFile);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: _pickImage,
-      child: _imageBytes != null
-          ? Image.memory(
-              _imageBytes!,
-              width: widget.maxWidth,
-              height: widget.maxHeight,
-              fit: BoxFit.contain,
-            )
-          : Container(
-              width: widget.maxWidth,
-              height: widget.maxHeight,
-              color: Colors.grey[300],
-              child: Center(
-                child: Text(
-                  'Tap to select image',
-                  style: TextStyle(color: Colors.black54),
+    return Consumer<WriteBlogsController>(
+              builder: (context, authController, child) {
+        return GestureDetector(
+          onTap: _pickImage,
+          child: _imageBytes != null
+              ? Image.memory(
+                  _imageBytes!,
+                  width: widget.maxWidth,
+                  height: widget.maxHeight,
+                  fit: BoxFit.contain,
+                )
+              : Container(
+                  width: widget.maxWidth,
+                  height: widget.maxHeight,
+                  color: Colors.grey[300],
+                  child: Center(
+                    child: Text(
+                      'Tap to select image',
+                      style: TextStyle(color: Colors.black54),
+                    ),
+                  ),
                 ),
-              ),
-            ),
+        );
+      }
     );
   }
 }

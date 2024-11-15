@@ -34,7 +34,9 @@ class WriteBlogAppBar extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   BottonWidgets.tinnySmallMainBotton(
-                      context: context, title: 'Publish', onPressed: () {}),
+                      context: context, title: 'Publish', onPressed: () {
+                        writeBlogController.showData();
+                      }),
                   SizedBox(
                     width: 20,
                   ),

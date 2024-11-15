@@ -1,6 +1,7 @@
 import 'dart:js_interop';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:my_website/models/widget_model.dart';
 import 'package:my_website/models/widgets_item.dart';
 import 'package:my_website/widgets/add_image_widget.dart';
@@ -9,6 +10,8 @@ import 'package:my_website/widgets/title_text_field_widget.dart';
 
 class WriteBlogsController extends ChangeNotifier {
   List<WidgetModel> widgetItems = [];
+
+  List<XFile>imageList=[];
  
 
   void addWidget(Enum widgetsItem) {
@@ -65,4 +68,15 @@ class WriteBlogsController extends ChangeNotifier {
         );
     }
   }
+
+
+  void showData(){
+    print(widgetItems.last.widget);
+  }
+
+
+void addImage(XFile file){
+  imageList.add(file);
+  notifyListeners();
+}
 }
