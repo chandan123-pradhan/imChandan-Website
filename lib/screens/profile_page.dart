@@ -6,7 +6,9 @@ import 'package:my_website/models/course_model.dart';
 import 'package:my_website/utils/app_state.dart';
 import 'package:my_website/utils/color_constant.dart';
 import 'package:my_website/utils/globalMethods.dart';
+import 'package:my_website/utils/global_variables.dart';
 import 'package:my_website/utils/routings.dart';
+import 'package:my_website/utils/shared_pref.dart';
 import 'package:my_website/web_services/url_constant.dart';
 import 'package:my_website/widgets/botton_widget.dart';
 import 'package:provider/provider.dart';
@@ -139,7 +141,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             Text(
                               profileController.getProfileApiResponse!.data.email,
                               style: GoogleFonts.barlow(
-                                textStyle: TextStyle(
+                                textStyle: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 20,
                                     fontWeight: FontWeight.w400),
@@ -182,8 +184,16 @@ class _ProfilePageState extends State<ProfilePage> {
                                 width: displayWidth(context) / 5,
                                 child: BottonWidgets.getSmallMainBotton(
                                     context: context,
-                                    title: 'Edit Profile',
-                                    onPressed: () {})),
+                                    title: 'Logout',
+                                    onPressed: () {
+                                      SharedPref _sharedPref = new SharedPref();
+                                      _sharedPref.removeAuthToken();
+                                      isLoggedIn=false;
+                                      setState(() {
+                                        
+                                      });
+                                      Navigator.pop(context);
+                                    })),
                             const SizedBox(
                               height: 20,
                             ),

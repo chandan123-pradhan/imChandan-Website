@@ -27,7 +27,7 @@ class _DynamicImageWidgetState extends State<DynamicImageWidget> {
       setState(() {
         _imageBytes = bytes;
       });
-      final WriteBlogsController writeBlogsController=new WriteBlogsController();
+      final writeBlogsController = Provider.of<WriteBlogsController>(context, listen: false);
       writeBlogsController.addImage(pickedFile);
     }
   }

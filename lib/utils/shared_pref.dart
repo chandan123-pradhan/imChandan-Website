@@ -29,4 +29,16 @@ class SharedPref {
       isLoggedIn = false;
     }
   }
+
+  Future<bool> removeAuthToken() async {
+    try {
+      SharedPreferences _sharePrefrences =
+          await SharedPreferences.getInstance();
+      _sharePrefrences.remove(AuthTokenKey);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
 }

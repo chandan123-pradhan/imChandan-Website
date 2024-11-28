@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart'; // Add this for image picking functionality
 import 'package:my_website/controllers/auth_controller.dart';
 import 'package:my_website/controllers/write_blogs_controller.dart';
+import 'package:my_website/models/login_model.dart';
 import 'package:my_website/models/register_model.dart';
 import 'package:my_website/utils/color_constant.dart';
 import 'package:my_website/utils/globalMethods.dart';
@@ -83,6 +84,16 @@ class _SignupDialogState extends State<SignupDialog> {
                           password: _passwordController.text,
                           profilePic: _imageBytes!);
                       authController.callForRegister(registerModel:registerModel,
+                      context: context
+                      );
+                    }else{
+                      print("loggin attempt");
+                        LoginModel loginModel = LoginModel(
+                        
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                         );
+                      authController.callForLogin(loginModel:loginModel,
                       context: context
                       );
                     }

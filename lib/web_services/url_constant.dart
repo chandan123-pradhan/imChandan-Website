@@ -4,4 +4,5 @@ class UrlConstant{
 
   static const String register_route_url='/api/register';
   static const String get_profile_route_url='/api/profile';
+  static const String login_route_url='/api/login';
 }

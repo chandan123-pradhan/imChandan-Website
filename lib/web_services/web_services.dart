@@ -72,4 +72,29 @@ class WebServices {
       return BaseResponseModel(status: false, message: 'success', data: {});
     }
   }
+
+  static Future<BaseResponseModel> postRequestBeforeAuth(
+      {required String routeUrL, required Map body}) async {
+        print("Url =$routeUrL and =======> body= $body");
+    try {
+      Uri uri = Uri.parse(
+        UrlConstant.base_url + routeUrL,
+      );
+      var response = await http.post(uri,
+      
+      body: json.encode(body)
+      );
+      if (response.statusCode != 200) {
+        return BaseResponseModel(
+            status: false,
+            message: 'success',
+            data: json.decode(response.body));
+      }
+      var res=json.decode(response.body);
+      return BaseResponseModel(
+          status: true, message: res['message'], data: res);
+    } catch (e) {
+      return BaseResponseModel(status: false, message: 'success', data: {});
+    }
+  }
 }

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:js_interop';
 
 import 'package:flutter/material.dart';
@@ -22,21 +23,27 @@ class WriteBlogsController extends ChangeNotifier {
         TextEditingController textEditingController =
             new TextEditingController();
         widgetItems.add(
-          WidgetModel(textEditingController: textEditingController, widget: titleTextField(), widgetType: WidgetsItem.titleWidget)
+          WidgetModel(textEditingController: textEditingController, widget: titleTextField(
+            controller: textEditingController
+          ), widgetType: WidgetsItem.titleWidget)
         );
         break;
       case WidgetsItem.headingWidget:
         TextEditingController textEditingController =
             new TextEditingController();
        widgetItems.add(
-          WidgetModel(textEditingController: textEditingController, widget: headingTextField(), widgetType: WidgetsItem.headingWidget)
+          WidgetModel(textEditingController: textEditingController, widget: headingTextField(
+            controller: textEditingController
+          ), widgetType: WidgetsItem.headingWidget)
         );
         break;
       case WidgetsItem.descriptionWidget:
         TextEditingController textEditingController =
             new TextEditingController();
          widgetItems.add(
-          WidgetModel(textEditingController: textEditingController, widget: descriptionTextField(), widgetType: WidgetsItem.dividerWidget)
+          WidgetModel(textEditingController: textEditingController, widget: descriptionTextField(
+            controller: textEditingController
+          ), widgetType: WidgetsItem.descriptionWidget)
         );
         break;
       case WidgetsItem.dividerWidget:
@@ -64,19 +71,60 @@ class WriteBlogsController extends ChangeNotifier {
         TextEditingController textEditingController =
             new TextEditingController();
         widgetItems.add(
-          WidgetModel(textEditingController: textEditingController, widget: titleTextField(), widgetType: WidgetsItem.titleWidget)
+          WidgetModel(textEditingController: textEditingController, widget: titleTextField(
+            controller: textEditingController
+          ), widgetType: WidgetsItem.titleWidget)
         );
     }
   }
 
 
-  void showData(){
-    print(widgetItems.last.widget);
-  }
-
-
+  
 void addImage(XFile file){
   imageList.add(file);
   notifyListeners();
 }
+void showData(){
+  List<Map> body=[];
+  int imageIndex=0;
+   for(int i=1;i<widgetItems.length;i++){
+    switch(widgetItems[i].widgetType){
+      case WidgetsItem.titleWidget: 
+      case WidgetsItem.descriptionWidget:
+      case WidgetsItem.headingWidget:
+        body.add({
+          'type':widgetItems[i].widgetType,
+          'content':widgetItems[i].textEditingController.text
+        });
+        break;
+      case WidgetsItem.dividerWidget:
+        body.add({
+          'type':widgetItems[i].widgetType,
+          'content':''
+        });
+        break;
+      case WidgetsItem.imageWidget:
+        body.add({
+          'type':widgetItems[i].widgetType,
+          'content':imageList[imageIndex],
+        });  
+        imageIndex++;
+        break;
+
+    }
+   }
+   print("body=$body");
+    Map<String,dynamic> titleMap={
+    
+      'title':widgetItems.first.textEditingController.text,
+      'thumbnail':'',
+      'data':body
+    
+  };
+  var v=titleMap;
+  print(v);
+   
+  }
+
+
 }

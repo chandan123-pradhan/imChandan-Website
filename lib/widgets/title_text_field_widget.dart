@@ -1,9 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_website/utils/color_constant.dart';
 
-Widget titleTextField() {
+Widget titleTextField({required TextEditingController controller}) {
   return TextFormField(
+    controller: controller,
     maxLines: null,
       decoration:  InputDecoration(
         hintText: 'Title...', // Hint text
@@ -23,8 +26,9 @@ Widget titleTextField() {
             fontWeight: FontWeight.w800),
       ));
 }
-Widget headingTextField() {
+Widget headingTextField({required TextEditingController controller}) {
   return TextFormField(
+    controller: controller,
     maxLines: null,
       decoration:  InputDecoration(
         hintText: 'Tell your story...', // Hint text
@@ -45,8 +49,9 @@ Widget headingTextField() {
       ));
 }
 
-Widget descriptionTextField() {
+Widget descriptionTextField({required TextEditingController controller}) {
   return TextFormField(
+    controller: controller,
     maxLines: null,
       decoration:  InputDecoration(
         hintText: 'write here...', // Hint text
